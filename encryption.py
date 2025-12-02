@@ -1,9 +1,15 @@
 
 class Algorithm_Eduroi:
 
-    def Eduroi(self, saint:str, msg:str) -> str:
-        print("This is saint",saint)
-        print("This is message",msg)
+    def Encript(self, saint:str, msg:str) -> str:
+        
+
+
+        return ""
+        
+
+    def Desncript(self, saint:str, signal:str) -> str:
+        
 
 
         return ""

@@ -1,5 +1,6 @@
 import wx
 from typing import Optional
+from encryption import Algorithm_Eduroi
 
 class Desktopui(wx.Frame):
     def __init__(self, parent = None):
@@ -9,11 +10,17 @@ class Desktopui(wx.Frame):
 
         self.saint_button = wx.Button(panel, label="Open Saint")
         self.signal_button = wx.Button(panel, label="Open Signal")
+        self.msg_button = wx.Button(panel, label="Open Message")
 
         self.saint_button.Bind(wx.EVT_BUTTON, self.on_open_click)
         self.signal_button.Bind(wx.EVT_BUTTON, self.on_open_click)
+        self.msg_button.Bind(wx.EVT_BUTTON, self.on_open_click)
 
-        self.cont_archive = None
+        self.conten_saint = None
+        self.conten_signal = None
+        self.conten_msg = None
+
+        self.Edu = Algorithm_Eduroi()
 
         sizer = wx.BoxSizer(wx.VERTICAL)
         sizer.Add(self.saint_button)
@@ -22,18 +29,26 @@ class Desktopui(wx.Frame):
 
 
 
-    def on_open_click(self, event: wx.CommandEvent) -> None:
+    def on_open_click(self, event) -> None:
         button = event.GetEventObject()
 
         if button is self.saint_button:
             print("Abriendo archivo para Saint...")
+            self.conten_saint = self.open_archive()
+
         elif button is self.signal_button:
             print("Abriendo archivo para Signal...")
+            self.conten_signal = self.open_archive()
 
-        contenido = self.open_archive()
-        if contenido is not None:
-            self.cont_archive = contenido
+        elif button is self.msg_button:
+            print("Abriendo archivo para Signal...")
+            self.conten_msg = self.open_archive()
+
+    def explotion(self):
+        if self.conten_saint and self.conten_signal is not None:
+            self.Edu.Encript(self.conten_saint, self.conten_signal)
             print("Archivo cargado correctamente.")
+        return ""
 
 
     def open_archive(self) -> Optional[str]:
