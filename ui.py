@@ -11,20 +11,24 @@ class Desktopui(wx.Frame):
         self.saint_button = wx.Button(panel, label="Open Saint")
         self.signal_button = wx.Button(panel, label="Open Signal")
         self.msg_button = wx.Button(panel, label="Open Message")
+        self.exec_button = wx.Button(panel, label="Execute")
 
-        self.saint_button.Bind(wx.EVT_BUTTON, self.on_open_click)
-        self.signal_button.Bind(wx.EVT_BUTTON, self.on_open_click)
-        self.msg_button.Bind(wx.EVT_BUTTON, self.on_open_click)
+        self.Edu = Algorithm_Eduroi()
 
         self.conten_saint = None
         self.conten_signal = None
         self.conten_msg = None
 
-        self.Edu = Algorithm_Eduroi()
+        self.saint_button.Bind(wx.EVT_BUTTON, self.on_open_click)
+        self.signal_button.Bind(wx.EVT_BUTTON, self.on_open_click)
+        self.msg_button.Bind(wx.EVT_BUTTON, self.on_open_click)
+        self.exec_button.Bind(wx.EVT_BUTTON, self.explotion)
 
         sizer = wx.BoxSizer(wx.VERTICAL)
         sizer.Add(self.saint_button)
         sizer.Add(self.signal_button)
+        sizer.Add(self.msg_button)
+        sizer.Add(self.exec_button)
         panel.SetSizer(sizer)
 
 
@@ -45,10 +49,8 @@ class Desktopui(wx.Frame):
             self.conten_msg = self.open_archive()
 
     def explotion(self):
-        if self.conten_saint and self.conten_signal is not None:
-            self.Edu.Encript(self.conten_saint, self.conten_signal)
-            print("Archivo cargado correctamente.")
-        return ""
+        self.conten_signal = self.Edu.Encript(self.conten_saint, self.conten_msg)
+        print("Archivo cargado correctamente.")
 
 
     def open_archive(self) -> Optional[str]:
